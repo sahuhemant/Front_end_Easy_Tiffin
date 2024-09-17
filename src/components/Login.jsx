@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 
 const Login = () => {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const navigate = useNavigate(); // Initialize navigate
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -21,6 +23,7 @@ const Login = () => {
       if (response.ok) {
         const data = await response.json();
         setSuccess(data.message);
+        navigate('/customers'); // Redirect to customers page on success
       } else {
         const errorData = await response.json();
         setError(errorData.error);
