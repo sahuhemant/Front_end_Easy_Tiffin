@@ -1,0 +1,28 @@
+/* Tiffins.css */
+.tiffin-container {
+  padding: 20px;
+}
+
+.create-tiffin-form {
+  margin-bottom: 20px;
+}
+
+.create-tiffin-form input,
+.create-tiffin-form select,
+.create-tiffin-form button {
+  margin: 5px 0;
+}
+
+.tiffin-list table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tiffin-list table, th, td {
+  border: 1px solid #ddd;
+}
+
+.tiffin-list th, td {
+  padding: 8px;
+  text-align: left;
+}
