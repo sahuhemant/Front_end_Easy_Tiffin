@@ -1,32 +1,33 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import './Customers.css'; // Import the CSS file for styling
-import '../App.css'; 
+import './Customers.css';
+import '../App.css';
 
 const Customers = () => {
   const [customers, setCustomers] = useState([]);
   const [filteredCustomers, setFilteredCustomers] = useState([]);
   const [newCustomer, setNewCustomer] = useState({ name: '', mobile_no: '', address: '' });
-  const [showDialog, setShowDialog] = useState(false); // State to control dialog visibility
-  const [showForm, setShowForm] = useState(false); // State to control form visibility
-  const [searchTerm, setSearchTerm] = useState(''); // State for search input
+  const [showDialog, setShowDialog] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
 
+  const userId = 27; // Static user ID
+
   useEffect(() => {
-    fetchCustomers();
+    fetchCustomers(userId);
   }, []);
 
   useEffect(() => {
-    // Filter customers based on the search term
     const filtered = customers.filter(customer =>
       customer.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredCustomers(filtered);
   }, [searchTerm, customers]);
 
-  const fetchCustomers = async () => {
+  const fetchCustomers = async (userId) => {
     try {
-      const response = await fetch('http://localhost:3001/customers');
+      const response = await fetch(`http://localhost:3001/users/${userId}/customers`);
       if (response.ok) {
         const data = await response.json();
         setCustomers(data);
@@ -38,16 +39,21 @@ const Customers = () => {
 
   const handleAddCustomer = async () => {
     try {
-      const response = await fetch('http://localhost:3001/customers', {
+      const response = await fetch(`http://localhost:3001/users/${userId}/customers`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newCustomer),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ customer: newCustomer }),
       });
+
       if (response.ok) {
-        fetchCustomers(); // Refresh customer list
+        fetchCustomers(userId); // Refresh customer list
         setNewCustomer({ name: '', mobile_no: '', address: '' });
-        setShowDialog(true); // Show the success dialog
-        setShowForm(false); // Hide the form
+        setShowDialog(true);
+        setShowForm(false);
+      } else {
+        console.error('Failed to add customer:', await response.json());
       }
     } catch (error) {
       console.error('Error adding customer:', error);
@@ -67,7 +73,6 @@ const Customers = () => {
       <h1>Customer Management</h1>
       <button className="back-button" onClick={() => navigate('/')}>Back to Home</button>
       
-      {/* Search Box */}
       <div className="search-container">
         <input
           type="text"
@@ -78,12 +83,10 @@ const Customers = () => {
         />
       </div>
 
-      {/* Toggle Form Button */}
       <button className="toggle-form-button" onClick={() => setShowForm(!showForm)}>
         {showForm ? 'Hide Form' : 'Add Customer'}
       </button>
       
-      {/* Customer Form */}
       {showForm && (
         <div className="customer-form">
           <h2>Add New Customer</h2>
@@ -133,7 +136,7 @@ const Customers = () => {
                   className="tiffin-button"
                   onClick={() => handleTiffinClick(customer.id)}
                 >
-                  Tiffin
+                  Go for Tiffin Entry
                 </button>
               </td>
             </tr>
@@ -141,7 +144,6 @@ const Customers = () => {
         </tbody>
       </table>
 
-      {/* Dialog for success message */}
       {showDialog && (
         <div className="dialog">
           <div className="dialog-content">

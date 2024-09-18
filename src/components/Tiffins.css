@@ -26,3 +26,17 @@
   padding: 8px;
   text-align: left;
 }
+
+/* Tick for yes and no in tiffin*/
+.status-icon {
+  font-size: 1.2em; /* Adjust the size as needed */
+  margin-right: 5px;
+}
+
+.tick {
+  color: green; /* Color for the checkmark */
+}
+
+.cross {
+  color: red; /* Color for the cross */
+}
