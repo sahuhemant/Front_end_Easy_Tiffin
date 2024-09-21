@@ -10,6 +10,7 @@ const Payment = () => {
     expYear: '',
     cvc: ''
   });
+  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
   const [successMessage, setSuccessMessage] = useState(''); // State for success message
   const navigate = useNavigate();
 
@@ -43,20 +44,25 @@ const Payment = () => {
 
       const result = await response.json();
       console.log('Payment successful:', result);
-      // Set success message
-      setSuccessMessage("Payment successfully processed! Thanks for your donation. We will make the application more simple and perfect.");
-      // Optionally navigate to a different page or clear the form
-      navigate("/");
+
+      // Set success message and show modal
+      setSuccessMessage(`Thanks ${result.customer_name} for giving me $${result.amount}!`);
+      setIsModalOpen(true); // Open modal
     } catch (error) {
       console.error('Error:', error);
       // Handle the error (e.g., show an error message)
     }
   };
 
+  // Close the modal and optionally navigate to another page
+  const closeModal = () => {
+    setIsModalOpen(false);
+    navigate("/"); // Optional navigation after closing
+  };
+
   return (
     <div className="form-container">
       <h2>Payment Details</h2>
-      {successMessage && <div className="success-message">{successMessage}</div>} {/* Display success message */}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="amount">Amount</label>
@@ -120,6 +126,16 @@ const Payment = () => {
         </div>
         <button type="submit">Submit Payment</button>
       </form>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="modal show-modal"> {/* Add class to show the modal */}
+          <div className="modal-content">
+            <span className="close" onClick={closeModal}>&times;</span>
+            <p>{successMessage}</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
