@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 const Register = ({ onSuccess }) => {
   const [name, setName] = useState('');
   const [userName, setUserName] = useState('');
+  const [email, setEmail] = useState(''); 
+  const [number, setNumber] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -16,10 +18,20 @@ const Register = ({ onSuccess }) => {
       const response = await fetch('http://localhost:3001/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user: { name, user_name: userName, password } }),
+        body: JSON.stringify({ 
+          user: { 
+            name, 
+            user_name: userName, 
+            email,
+            number,
+            password 
+          } 
+        }),
       });
 
       if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('token', data.token); // Store token in localStorage
         onSuccess('Registration successful! Now you can login.'); // Pass success message to onSuccess
         navigate('/'); // Redirect to the home page
       } else {
@@ -49,10 +61,25 @@ const Register = ({ onSuccess }) => {
           onChange={(e) => setUserName(e.target.value)}
         />
         <input
+          type="email" // Change type to email
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          type="tel" // Change type to tel for number
+          placeholder="Number"
+          value={number}
+          onChange={(e) => setNumber(e.target.value)}
+          required
+        />
+        <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
         <button type="submit">Register</button>
       </form>

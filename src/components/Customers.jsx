@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import './Customers.css';
 import '../App.css';
+import { useAuth } from '../AuthContext';
 
 const Customers = () => {
+  const { username } = useAuth();
   const [customers, setCustomers] = useState([]);
   const [filteredCustomers, setFilteredCustomers] = useState([]);
   const [newCustomer, setNewCustomer] = useState({ name: '', mobile_no: '', address: '' });
@@ -12,10 +14,17 @@ const Customers = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
 
-  const userId = 27; // Static user ID
+  // Function to retrieve the token and extract the user ID
+  const getUserIdFromToken = () => {
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+
+    const payload = JSON.parse(atob(token.split('.')[1])); // Decode JWT payload
+    return payload.user_id; // Return user_id from token payload
+  };
 
   useEffect(() => {
-    fetchCustomers(userId);
+    fetchCustomers();
   }, []);
 
   useEffect(() => {
@@ -27,22 +36,33 @@ const Customers = () => {
 
   const fetchCustomers = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:3001/users/${userId}/customers`);
+      const response = await fetch(`http://localhost:3001/customers`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}` // Include token in the request
+        },
+      });
       if (response.ok) {
         const data = await response.json();
-        setCustomers(data);
+        // Ensure data is an array
+        setCustomers(Array.isArray(data) ? data : []);
+      } else {
+        console.error('Failed to fetch customers:', await response.json());
+        setCustomers([]); 
       }
     } catch (error) {
       console.error('Error fetching customers:', error);
+      setCustomers([]);
     }
   };
 
   const handleAddCustomer = async () => {
+    const userId = getUserIdFromToken();
     try {
-      const response = await fetch(`http://localhost:3001/users/${userId}/customers`, {
+      const response = await fetch(`http://localhost:3001/customers`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}` // Include token in the request
         },
         body: JSON.stringify({ customer: newCustomer }),
       });
@@ -70,9 +90,17 @@ const Customers = () => {
 
   return (
     <div className="customer-container">
+          <div>
+      <h1>Welcome, {username}!</h1> {/* Display the username */}
+      {/* Other component code... */}
+      <button className="navigate-to-form-button" onClick={() => navigate('/payment')}>
+        Please Donate Some Amount for me
+      </button>
+    </div>
       <h1>Customer Management</h1>
       <button className="back-button" onClick={() => navigate('/')}>Back to Home</button>
-      
+
+
       <div className="search-container">
         <input
           type="text"
@@ -86,7 +114,7 @@ const Customers = () => {
       <button className="toggle-form-button" onClick={() => setShowForm(!showForm)}>
         {showForm ? 'Hide Form' : 'Add Customer'}
       </button>
-      
+
       {showForm && (
         <div className="customer-form">
           <h2>Add New Customer</h2>

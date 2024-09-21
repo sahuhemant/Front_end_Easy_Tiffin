@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { useAuth } from '../AuthContext'; // Import useAuth to access context
 
 const Login = () => {
   const [userName, setUserName] = useState('');
@@ -7,6 +8,7 @@ const Login = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const navigate = useNavigate(); // Initialize navigate
+  const { setUsername } = useAuth(); // Get setUsername from the Auth context
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -22,6 +24,8 @@ const Login = () => {
 
       if (response.ok) {
         const data = await response.json();
+        localStorage.setItem('token', data.token); 
+        setUsername(data.user_name); // Set the username in context
         setSuccess(data.message);
         navigate('/customers'); // Redirect to customers page on success
       } else {
