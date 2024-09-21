@@ -6,7 +6,7 @@ const Tiffins = () => {
   const { customerId } = useParams();
   const [tiffins, setTiffins] = useState([]);
   const [newTiffin, setNewTiffin] = useState({
-    start_date: new Date().toISOString().split('T')[0], // Set the current date as the default
+    start_date: new Date().toISOString().split('T')[0],
     day_status: 'yes',
     night_status: 'right'
   });
@@ -14,6 +14,7 @@ const Tiffins = () => {
   const [tiffinCount, setTiffinCount] = useState(0);
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
+  const token = localStorage.getItem('token'); // Assuming the token is stored in localStorage
 
   useEffect(() => {
     fetchTiffins();
@@ -21,33 +22,42 @@ const Tiffins = () => {
 
   const fetchTiffins = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/customers/${customerId}/tiffins`);
+      const response = await fetch(`http://localhost:3001/customers/${customerId}/tiffins`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`, // Passing the token
+        },
+      });
+
       if (response.ok) {
         const data = await response.json();
-        if (data.length === 0) {
-          setShowCreateForm(true); // Show the form if no tiffins are present
+        const tiffinsData = data.tiffins; // Accessing the tiffins array from the response
+        if (tiffinsData.length === 0) {
+          setMessage('No tiffins available.');
         } else {
-          setTiffins(data);
-          setTiffinCount(data.length);
-          setShowCreateForm(false); // Hide the form if tiffins are present
+          setTiffins(tiffinsData);
+          setTiffinCount(data.total_count);
         }
       } else {
-        setMessage('No tiffins available.');
-        setShowCreateForm(true); // Show create form if there's an error
+        setMessage('Failed to fetch tiffins.');
       }
     } catch (error) {
       console.error('Error fetching tiffins:', error);
-      setShowCreateForm(true); // Show create form if there's a fetch error
+      setMessage('Error fetching tiffins.');
     }
   };
-  
+
   const handleCreateTiffin = async () => {
     try {
       const response = await fetch(`http://localhost:3001/customers/${customerId}/tiffins`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
         body: JSON.stringify(newTiffin),
       });
+
       if (response.ok) {
         fetchTiffins();
         setNewTiffin({ start_date: '', day_status: 'yes', night_status: 'right' });
@@ -58,7 +68,6 @@ const Tiffins = () => {
       console.error('Error creating tiffin:', error);
     }
   };
-  
 
   const handleEditClick = (tiffin) => {
     setEditTiffin(tiffin);
@@ -72,7 +81,10 @@ const Tiffins = () => {
     try {
       const response = await fetch(`http://localhost:3001/customers/${customerId}/tiffins/${editTiffin.id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
         body: JSON.stringify({
           tiffin: {
             start_date: editTiffin.start_date,
@@ -81,6 +93,7 @@ const Tiffins = () => {
           }
         }),
       });
+
       if (response.ok) {
         fetchTiffins();
         setEditTiffin(null);
@@ -92,9 +105,17 @@ const Tiffins = () => {
     }
   };
 
+  const handleBackToCustomers = () => {
+    navigate('/customers');
+  };
+
   return (
     <div className="tiffin-container">
       <h1>Tiffins for Customer {customerId}</h1>
+            {/* Back to Customers Button */}
+      <button onClick={handleBackToCustomers} className="back-button">
+        Back to Customers
+      </button>
       <h2>Total Tiffins: {tiffinCount}</h2>
       {message && <p>{message}</p>}
 
@@ -111,7 +132,6 @@ const Tiffins = () => {
             </tr>
           </thead>
           <tbody>
-            {/* Add the row for creating a new tiffin */}
             <tr>
               <td>
                 <input
@@ -126,8 +146,8 @@ const Tiffins = () => {
                   value={newTiffin.day_status}
                   onChange={(e) => setNewTiffin({ ...newTiffin, day_status: e.target.value })}
                 >
-                  <option value="yes">✔</option> {/* Right tick */}
-                  <option value="no">✖</option> {/* Cross tick */}
+                  <option value="yes">✔</option>
+                  <option value="no">✖</option>
                 </select>
               </td>
               <td>
@@ -135,19 +155,18 @@ const Tiffins = () => {
                   value={newTiffin.night_status}
                   onChange={(e) => setNewTiffin({ ...newTiffin, night_status: e.target.value })}
                 >
-                  <option value="right">✔</option> {/* Right tick */}
-                  <option value="wrong">✖</option> {/* Cross tick */}
+                  <option value="right">✔</option>
+                  <option value="wrong">✖</option>
                 </select>
               </td>
-              <td>-</td> {/* Placeholder for status count */}
+              <td>-</td>
               <td>
                 <button onClick={handleCreateTiffin}>Create</button>
               </td>
             </tr>
 
-            {/* Render the sorted list of tiffins */}
             {tiffins
-              .sort((a, b) => new Date(b.start_date) - new Date(a.start_date)) // Sort by start_date in descending order
+              ?.sort((a, b) => new Date(b.start_date) - new Date(a.start_date))
               .map((tiffin) => (
                 <tr key={tiffin.id}>
                   {editTiffin && editTiffin.id === tiffin.id ? (
@@ -213,7 +232,6 @@ const Tiffins = () => {
           </tbody>
         </table>
       </div>
-
     </div>
   );
 };
