@@ -5,6 +5,7 @@ import '../App.css';
 import { useAuth } from '../AuthContext';
 
 const Customers = () => {
+  const { logout } = useAuth(); 
   const { username } = useAuth();
   const [customers, setCustomers] = useState([]);
   const [filteredCustomers, setFilteredCustomers] = useState([]);
@@ -13,15 +14,6 @@ const Customers = () => {
   const [showForm, setShowForm] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
-
-  // Function to retrieve the token and extract the user ID
-  const getUserIdFromToken = () => {
-    const token = localStorage.getItem('token');
-    if (!token) return null;
-
-    const payload = JSON.parse(atob(token.split('.')[1])); // Decode JWT payload
-    return payload.user_id; // Return user_id from token payload
-  };
 
   useEffect(() => {
     fetchCustomers();
@@ -34,41 +26,37 @@ const Customers = () => {
     setFilteredCustomers(filtered);
   }, [searchTerm, customers]);
 
-  const fetchCustomers = async (userId) => {
+  const fetchCustomers = async () => {
     try {
       const response = await fetch(`http://localhost:3001/customers`, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}` // Include token in the request
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
       });
       if (response.ok) {
         const data = await response.json();
-        // Ensure data is an array
         setCustomers(Array.isArray(data) ? data : []);
       } else {
         console.error('Failed to fetch customers:', await response.json());
-        setCustomers([]); 
       }
     } catch (error) {
       console.error('Error fetching customers:', error);
-      setCustomers([]);
     }
   };
 
   const handleAddCustomer = async () => {
-    const userId = getUserIdFromToken();
     try {
       const response = await fetch(`http://localhost:3001/customers`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}` // Include token in the request
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({ customer: newCustomer }),
       });
 
       if (response.ok) {
-        fetchCustomers(userId); // Refresh customer list
+        fetchCustomers();
         setNewCustomer({ name: '', mobile_no: '', address: '' });
         setShowDialog(true);
         setShowForm(false);
@@ -87,19 +75,25 @@ const Customers = () => {
   const closeDialog = () => {
     setShowDialog(false);
   };
+  const handleLogout = () => {
+    logout(); // Assuming logout is defined in your useAuth hook
+    navigate('/login'); // Adjust according to your login route
+  };
 
   return (
     <div className="customer-container">
-          <div>
-      <h1>Welcome, {username}!</h1> {/* Display the username */}
-      {/* Other component code... */}
-      <button className="navigate-to-form-button" onClick={() => navigate('/payment')}>
-        Please Donate Some Amount for me
+      <button className="logout-button" onClick={handleLogout}>
+        Logout
       </button>
-    </div>
-      <h1>Customer Management</h1>
-      <button className="back-button" onClick={() => navigate('/')}>Back to Home</button>
-
+      
+      <div className="button-container">
+        <button className="navigate-to-form-button" onClick={() => navigate('/payment')}>
+          Please Donate Some Amount for me
+        </button>
+        <button className="toggle-form-button" onClick={() => setShowForm(!showForm)}>
+          {showForm ? 'Hide Form' : 'Add Customer'}
+        </button>
+      </div>
 
       <div className="search-container">
         <input
@@ -110,10 +104,6 @@ const Customers = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-
-      <button className="toggle-form-button" onClick={() => setShowForm(!showForm)}>
-        {showForm ? 'Hide Form' : 'Add Customer'}
-      </button>
 
       {showForm && (
         <div className="customer-form">

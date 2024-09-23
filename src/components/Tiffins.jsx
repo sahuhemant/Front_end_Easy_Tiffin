@@ -111,14 +111,18 @@ const Tiffins = () => {
 
   return (
     <div className="tiffin-container">
-      <h1>Tiffins for Customer {customerId}</h1>
-            {/* Back to Customers Button */}
       <button onClick={handleBackToCustomers} className="back-button">
         Back to Customers
       </button>
-      <h2>Total Tiffins: {tiffinCount}</h2>
-      {message && <p>{message}</p>}
-
+      
+      <h1>Tiffins for Customer {customerId}</h1>
+      
+      <h2 className="total-tiffin-count">
+        Total Tiffins: <span>{tiffinCount}</span>
+      </h2>
+      
+      {tiffins.length > 0 && message && <p>{message}</p>}
+  
       <div className="tiffin-list">
         <h2>Tiffin List</h2>
         <table>
@@ -164,7 +168,7 @@ const Tiffins = () => {
                 <button onClick={handleCreateTiffin}>Create</button>
               </td>
             </tr>
-
+  
             {tiffins
               ?.sort((a, b) => new Date(b.start_date) - new Date(a.start_date))
               .map((tiffin) => (
@@ -234,6 +238,7 @@ const Tiffins = () => {
       </div>
     </div>
   );
-};
-
-export default Tiffins;
+  };
+  
+  export default Tiffins;
+  

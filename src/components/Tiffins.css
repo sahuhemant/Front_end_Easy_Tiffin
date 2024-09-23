@@ -1,42 +1,50 @@
-/* Tiffins.css */
 .tiffin-container {
   padding: 20px;
+  position: relative; /* To position the back button absolutely */
 }
 
-.create-tiffin-form {
-  margin-bottom: 20px;
+.back-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #007bff; /* Primary color */
+  color: white;
+  padding: 5px 10px; /* Smaller padding for smaller size */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.8em; /* Smaller font size */
 }
 
-.create-tiffin-form input,
-.create-tiffin-form select,
-.create-tiffin-form button {
-  margin: 5px 0;
+.back-button:hover {
+  opacity: 0.9; /* Slightly transparent on hover */
 }
 
-.tiffin-list table {
-  width: 100%;
-  border-collapse: collapse;
+.total-tiffin-count {
+  font-weight: bold;
+  font-size: 1.5em; /* Size for emphasis */
+  color: #007bff; /* Highlight color for count */
+  margin-top: 60px; /* To give space below the back button */
 }
 
-.tiffin-list table, th, td {
-  border: 1px solid #ddd;
+.total-tiffin-count span {
+  background-color: rgba(0, 123, 255, 0.1); /* Light background for highlight */
+  padding: 5px;
+  border-radius: 3px;
 }
 
-.tiffin-list th, td {
-  padding: 8px;
-  text-align: left;
-}
-
-/* Tick for yes and no in tiffin*/
+/* Status icon styles */
 .status-icon {
-  font-size: 1.2em; /* Adjust the size as needed */
+  font-size: 1.5em; /* Adjust size */
   margin-right: 5px;
 }
 
 .tick {
-  color: green; /* Color for the checkmark */
+  color: green; /* Bold green */
+  font-weight: bold; /* Bold */
 }
 
 .cross {
-  color: red; /* Color for the cross */
+  color: red; /* Bold red */
+  font-weight: bold; /* Bold */
 }
