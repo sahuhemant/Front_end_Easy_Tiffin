@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import './Tiffins.css';
+import PaymentCard from './PaymentCard';
+import TiffinForm from './TiffinForm';
+import TiffinList from './TiffinList';
 
 const Tiffins = () => {
   const { customerId } = useParams();
@@ -14,7 +17,7 @@ const Tiffins = () => {
   const [tiffinCount, setTiffinCount] = useState(0);
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
-  const token = localStorage.getItem('token'); // Assuming the token is stored in localStorage
+  const token = localStorage.getItem('token'); 
 
   useEffect(() => {
     fetchTiffins();
@@ -25,13 +28,13 @@ const Tiffins = () => {
       const response = await fetch(`http://localhost:3001/customers/${customerId}/tiffins`, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`, // Passing the token
+          'Authorization': `Bearer ${token}`, 
         },
       });
 
       if (response.ok) {
         const data = await response.json();
-        const tiffinsData = data.tiffins; // Accessing the tiffins array from the response
+        const tiffinsData = data.tiffins;
         if (tiffinsData.length === 0) {
           setMessage('No tiffins available.');
         } else {
@@ -115,14 +118,15 @@ const Tiffins = () => {
         Back to Customers
       </button>
       
-      <h1>Tiffins for Customer {customerId}</h1>
+      <h1 className="customer-header">Tiffins for Customer {customerId}</h1>
+      <PaymentCard customerId={customerId} />
       
       <h2 className="total-tiffin-count">
         Total Tiffins: <span>{tiffinCount}</span>
       </h2>
-      
-      {tiffins.length > 0 && message && <p>{message}</p>}
-  
+
+      {message && <p>{message}</p>} {/* Show message if exists */}
+
       <div className="tiffin-list">
         <h2>Tiffin List</h2>
         <table>
@@ -136,109 +140,23 @@ const Tiffins = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>
-                <input
-                  type="date"
-                  placeholder="Start Date"
-                  value={newTiffin.start_date}
-                  onChange={(e) => setNewTiffin({ ...newTiffin, start_date: e.target.value })}
-                />
-              </td>
-              <td>
-                <select
-                  value={newTiffin.day_status}
-                  onChange={(e) => setNewTiffin({ ...newTiffin, day_status: e.target.value })}
-                >
-                  <option value="yes">✔</option>
-                  <option value="no">✖</option>
-                </select>
-              </td>
-              <td>
-                <select
-                  value={newTiffin.night_status}
-                  onChange={(e) => setNewTiffin({ ...newTiffin, night_status: e.target.value })}
-                >
-                  <option value="right">✔</option>
-                  <option value="wrong">✖</option>
-                </select>
-              </td>
-              <td>-</td>
-              <td>
-                <button onClick={handleCreateTiffin}>Create</button>
-              </td>
-            </tr>
-  
-            {tiffins
-              ?.sort((a, b) => new Date(b.start_date) - new Date(a.start_date))
-              .map((tiffin) => (
-                <tr key={tiffin.id}>
-                  {editTiffin && editTiffin.id === tiffin.id ? (
-                    <>
-                      <td>
-                        <input
-                          type="date"
-                          name="start_date"
-                          value={editTiffin.start_date}
-                          onChange={handleEditChange}
-                        />
-                      </td>
-                      <td>
-                        <select
-                          name="day_status"
-                          value={editTiffin.day_status}
-                          onChange={handleEditChange}
-                        >
-                          <option value="yes">✔</option>
-                          <option value="no">✖</option>
-                        </select>
-                      </td>
-                      <td>
-                        <select
-                          name="night_status"
-                          value={editTiffin.night_status}
-                          onChange={handleEditChange}
-                        >
-                          <option value="right">✔</option>
-                          <option value="wrong">✖</option>
-                        </select>
-                      </td>
-                      <td>{editTiffin.status_count}</td>
-                      <td>
-                        <button onClick={handleSaveEdit}>Save</button>
-                      </td>
-                    </>
-                  ) : (
-                    <>
-                      <td>{tiffin.start_date}</td>
-                      <td>
-                        {tiffin.day_status === 'yes' ? (
-                          <span className="status-icon tick">✔</span>
-                        ) : (
-                          <span className="status-icon cross">✖</span>
-                        )}
-                      </td>
-                      <td>
-                        {tiffin.night_status === 'right' ? (
-                          <span className="status-icon tick">✔</span>
-                        ) : (
-                          <span className="status-icon cross">✖</span>
-                        )}
-                      </td>
-                      <td>{tiffin.status_count}</td>
-                      <td>
-                        <button onClick={() => handleEditClick(tiffin)}>Edit</button>
-                      </td>
-                    </>
-                  )}
-                </tr>
-              ))}
+            <TiffinForm 
+              newTiffin={newTiffin} 
+              setNewTiffin={setNewTiffin} 
+              handleCreateTiffin={handleCreateTiffin} 
+            />
+            <TiffinList 
+              tiffins={tiffins} 
+              editTiffin={editTiffin}
+              handleEditClick={handleEditClick} 
+              handleEditChange={handleEditChange} 
+              handleSaveEdit={handleSaveEdit} 
+            />
           </tbody>
         </table>
       </div>
     </div>
   );
-  };
-  
-  export default Tiffins;
-  
+};
+
+export default Tiffins;
