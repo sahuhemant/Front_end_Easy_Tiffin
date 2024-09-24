@@ -1,0 +1,12 @@
+.tiffin-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  align-items: flex-start; /* Align items to the start */
+}
+
+.tiffin-list {
+  display: flex;
+  justify-content: flex-end; /* Align tiffin list to the right */
+  width: 100%; /* Ensure it takes full width */
+}
