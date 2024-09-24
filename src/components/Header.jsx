@@ -6,7 +6,6 @@ const Header = () => {
 
   return (
     <header>
-      <h1>Welcome, {username ? username : 'Guest'}</h1>
       {username && (
         <button onClick={logout}>Logout</button>
       )}

@@ -1,14 +1,15 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
-import { useAuth } from '../AuthContext'; // Import useAuth to access context
+import { useNavigate } from 'react-router-dom'; 
+import { useAuth } from '../AuthContext'; 
+import './Login.css'; // Import the CSS file
 
 const Login = () => {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const navigate = useNavigate(); // Initialize navigate
-  const { setUsername } = useAuth(); // Get setUsername from the Auth context
+  const navigate = useNavigate(); 
+  const { setUsername } = useAuth(); 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -25,9 +26,9 @@ const Login = () => {
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem('token', data.token); 
-        setUsername(data.user_name); // Set the username in context
+        setUsername(data.user_name); 
         setSuccess(data.message);
-        navigate('/customers'); // Redirect to customers page on success
+        navigate('/customers'); 
       } else {
         const errorData = await response.json();
         setError(errorData.error);
@@ -38,24 +39,26 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
-      {success && <p style={{ color: 'green' }}>{success}</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
+    <div className="login-container">
+      <h1 className="login-title">Login</h1>
+      {success && <p className="login-success">{success}</p>}
+      {error && <p className="login-error">{error}</p>}
+      <form onSubmit={handleSubmit} className="login-form">
         <input
           type="text"
           placeholder="Username"
           value={userName}
           onChange={(e) => setUserName(e.target.value)}
+          className="login-input"
         />
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          className="login-input"
         />
-        <button type="submit">Login</button>
+        <button type="submit" className="login-button">Login</button>
       </form>
     </div>
   );
