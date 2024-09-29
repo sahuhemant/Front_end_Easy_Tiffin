@@ -1,37 +1,58 @@
-/* WelcomePage.css */
-
+/* Style for the entire page */
 .welcome-container {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center items horizontally */
-  justify-content: center; /* Center items vertically */
-  height: 100vh; /* Full height of the viewport */
-  background: linear-gradient(to bottom, #4a90e2, #50e3c2); /* Gradient background */
+  height: 100vh;
+  background: linear-gradient(to bottom right, #4591e7, #50e3c2);
   color: white;
-  text-align: center;
+  font-family: 'Arial', sans-serif;
+  position: relative;
 }
 
-.welcome-title {
-  font-size: 2.5rem;
-  margin-bottom: 2rem; /* Space below title */
-}
-
-.button-container {
+/* Navbar styles */
+.navbar {
+  background-color: #333;
+  padding: 1rem 2rem;
   display: flex;
-  gap: 1rem; /* Space between buttons */
+  justify-content: flex-start; /* Align content to the left */
+  align-items: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  position: fixed; /* Keep the navbar fixed at the top */
+  width: 100%; /* Full width */
+  top: 0;
+  left: 0; /* Ensure it starts from the left */
+  z-index: 1000;
 }
 
-.welcome-button {
-  padding: 0.75rem 1.5rem;
+/* Adjusted brand styles */
+.navbar-brand {
+  font-size: 1.8rem;
+  color: #e74c3c !important;
+  font-weight: bold;
+  margin-right: 2rem; /* Space between brand and buttons */
+}
+
+.navbar-buttons {
+  display: flex;
+  flex-direction: column; /* Align buttons vertically */
+  margin-top: 0.5rem; /* Spacing above the buttons */
+}
+
+/* Button styling */
+.btn-outline-light {
+  border: 2px solid white;
+  padding: 0.5rem 1.2rem;
   font-size: 1rem;
   color: white;
-  background-color: #007bff; /* Bootstrap primary color */
-  border: none;
+  background-color: transparent;
   border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem; /* Spacing between buttons */
+  width: 150px; /* Make the button width consistent */
 }
 
-.welcome-button:hover {
-  background-color: #0056b3; /* Darker shade on hover */
+.btn-outline-light:hover {
+  background-color: white;
+  color: #333;
+  border-color: white;
 }

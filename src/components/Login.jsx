@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { useAuth } from '../AuthContext'; 
-import './Login.css'; // Import the CSS file
+import './Login.css';
 
-const Login = () => {
+const Login = ({ setShowLogin }) => { // Accept setShowLogin as a prop
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -28,6 +28,7 @@ const Login = () => {
         localStorage.setItem('token', data.token); 
         setUsername(data.user_name); 
         setSuccess(data.message);
+        setShowLogin(false); // Close the login form on success
         navigate('/customers'); 
       } else {
         const errorData = await response.json();
@@ -59,6 +60,7 @@ const Login = () => {
           className="login-input"
         />
         <button type="submit" className="login-button">Login</button>
+        <button type="button" className="login-close-button" onClick={() => setShowLogin(false)}>Close</button> {/* Close button */}
       </form>
     </div>
   );

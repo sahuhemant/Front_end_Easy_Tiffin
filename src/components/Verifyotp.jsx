@@ -31,10 +31,8 @@ const VerifyOtp = () => {
       });
 
       if (response.ok) {
-        setSuccessMessage('OTP verified, registration complete. You can now log in.');
-        setTimeout(() => {
-          navigate('/login'); // Redirect to login page after a short delay
-        }, 2000);
+        // Instead of navigating to the login page, navigate to the welcome page
+        navigate('/', { state: { message: 'Registration successfully! You can login now.' } });
       } else {
         const errorData = await response.json();
         setError(errorData.message);
