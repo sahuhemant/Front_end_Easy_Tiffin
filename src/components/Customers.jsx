@@ -3,14 +3,17 @@ import { useNavigate } from "react-router-dom";
 import './Customers.css';
 import '../App.css';
 import { useAuth } from '../AuthContext';
+import CustomerForm from './CustomerForm'; // Import the CustomerForm component
+import CustomerList from './CustomerList'; // Import the CustomerList component
+import Modal from './Modal'; // Import the Modal component
 
 const Customers = () => {
   const { logout } = useAuth(); 
-  const { username } = useAuth();
   const [customers, setCustomers] = useState([]);
   const [filteredCustomers, setFilteredCustomers] = useState([]);
   const [newCustomer, setNewCustomer] = useState({ name: '', mobile_no: '', address: '' });
-  const [showDialog, setShowDialog] = useState(false);
+  const [showModal, setShowModal] = useState(false); // Use showModal instead of showDialog
+  const [modalMessage, setModalMessage] = useState(''); // Message for the modal
   const [showForm, setShowForm] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
@@ -58,7 +61,8 @@ const Customers = () => {
       if (response.ok) {
         fetchCustomers();
         setNewCustomer({ name: '', mobile_no: '', address: '' });
-        setShowDialog(true);
+        setModalMessage('Customer created successfully!'); // Set modal message
+        setShowModal(true); // Show the modal
         setShowForm(false);
       } else {
         console.error('Failed to add customer:', await response.json());
@@ -72,12 +76,13 @@ const Customers = () => {
     navigate(`/customers/${customerId}/tiffins`);
   };
 
-  const closeDialog = () => {
-    setShowDialog(false);
+  const closeModal = () => {
+    setShowModal(false);
   };
+
   const handleLogout = () => {
     logout(); // Assuming logout is defined in your useAuth hook
-    navigate('/login'); // Adjust according to your login route
+    navigate('/'); // Redirect to Welcome page
   };
 
   return (
@@ -89,9 +94,6 @@ const Customers = () => {
       <div className="button-container">
         <button className="navigate-to-form-button" onClick={() => navigate('/payment')}>
           Please Donate Some Amount for me
-        </button>
-        <button className="toggle-form-button" onClick={() => setShowForm(!showForm)}>
-          {showForm ? 'Hide Form' : 'Add Customer'}
         </button>
       </div>
 
@@ -105,71 +107,20 @@ const Customers = () => {
         />
       </div>
 
-      {showForm && (
-        <div className="customer-form">
-          <h2>Add New Customer</h2>
-          <input
-            type="text"
-            placeholder="Name"
-            value={newCustomer.name}
-            className="form-input"
-            onChange={(e) => setNewCustomer({ ...newCustomer, name: e.target.value })}
-          />
-          <input
-            type="text"
-            placeholder="Mobile Number"
-            value={newCustomer.mobile_no}
-            className="form-input"
-            onChange={(e) => setNewCustomer({ ...newCustomer, mobile_no: e.target.value })}
-          />
-          <input
-            type="text"
-            placeholder="Address"
-            value={newCustomer.address}
-            className="form-input"
-            onChange={(e) => setNewCustomer({ ...newCustomer, address: e.target.value })}
-          />
-          <button className="add-button" onClick={handleAddCustomer}>Add Customer</button>
-        </div>
-      )}
+      <CustomerForm 
+        newCustomer={newCustomer} 
+        setNewCustomer={setNewCustomer} 
+        handleAddCustomer={handleAddCustomer} 
+        showForm={showForm} 
+        setShowForm={setShowForm} 
+      />
 
-      <h2>Customer List</h2>
-      <table className="customer-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Mobile Number</th>
-            <th>Address</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredCustomers.map((customer) => (
-            <tr key={customer.id}>
-              <td>{customer.name}</td>
-              <td>{customer.mobile_no}</td>
-              <td>{customer.address}</td>
-              <td>
-                <button 
-                  className="tiffin-button"
-                  onClick={() => handleTiffinClick(customer.id)}
-                >
-                  Go for Tiffin Entry
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <CustomerList 
+        filteredCustomers={filteredCustomers} 
+        handleTiffinClick={handleTiffinClick} 
+      />
 
-      {showDialog && (
-        <div className="dialog">
-          <div className="dialog-content">
-            <p>Customer created successfully!</p>
-            <button className="dialog-close-button" onClick={closeDialog}>Close</button>
-          </div>
-        </div>
-      )}
+      {showModal && <Modal message={modalMessage} onClose={closeModal} />} {/* Show the modal */}
     </div>
   );
 };

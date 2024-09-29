@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('token'); // Clear token from localStorage
     localStorage.removeItem('userName'); // Clear username from localStorage
     setUsername(''); // Reset the username in context
-    navigate('/login'); // Redirect to login page
+    navigate('/'); // Redirect to Welcome page
   };
 
   return (

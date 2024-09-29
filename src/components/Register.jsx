@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Register.css'; // Import the CSS file
+import './Register.css'; // Import the updated CSS file
 
-const Register = ({ onSuccess }) => {
+const Register = ({ setShowRegister }) => { // Accept setShowRegister as a prop
   const [name, setName] = useState('');
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
@@ -32,6 +32,7 @@ const Register = ({ onSuccess }) => {
 
       if (response.ok) {
         navigate('/verify-otp', { state: { userName } });
+        setShowRegister(false); // Close the registration form on success
       } else {
         const errorData = await response.json();
         setError(errorData.errors.join(', '));
@@ -42,50 +43,53 @@ const Register = ({ onSuccess }) => {
   };
 
   return (
-    <div className="register-container">
-      <h1 className="register-title">Register</h1>
-      {error && <p className="register-error">{error}</p>}
-      <form onSubmit={handleSubmit} className="register-form">
-        <input
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="register-input"
-        />
-        <input
-          type="text"
-          placeholder="Username"
-          value={userName}
-          onChange={(e) => setUserName(e.target.value)}
-          className="register-input"
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          className="register-input"
-        />
-        <input
-          type="tel"
-          placeholder="Number"
-          value={number}
-          onChange={(e) => setNumber(e.target.value)}
-          required
-          className="register-input"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          className="register-input"
-        />
-        <button type="submit" className="register-button">Register</button>
-      </form>
+    <div className="register-overlay"> {/* Added overlay */}
+      <div className="register-container">
+        <h1 className="register-title">Register</h1>
+        {error && <p className="register-error">{error}</p>}
+        <form onSubmit={handleSubmit} className="register-form">
+          <input
+            type="text"
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="register-input"
+          />
+          <input
+            type="text"
+            placeholder="Username"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+            className="register-input"
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="register-input"
+          />
+          <input
+            type="tel"
+            placeholder="Number"
+            value={number}
+            onChange={(e) => setNumber(e.target.value)}
+            required
+            className="register-input"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="register-input"
+          />
+          <button type="submit" className="register-button">Register</button>
+          <button type="button" className="register-close-button" onClick={() => setShowRegister(false)}>Close</button> {/* Close button */}
+        </form>
+      </div>
     </div>
   );
 };
