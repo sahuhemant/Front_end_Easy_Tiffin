@@ -1,48 +1,51 @@
 import React, { useState, useEffect } from 'react'; 
-import { useNavigate, useLocation } from 'react-router-dom';
-import Login from './Login'; // Import the Login component
-import Register from './Register'; // Import the Register component
-import Modal from './Modal'; // Import your Modal component
+import { useLocation } from 'react-router-dom';
+import Login from './Login'; 
+import Register from './Register'; 
+import Modal from './Modal'; 
 import './WelcomePage.css';
 
 const WelcomePage = () => {
-  const [showLogin, setShowLogin] = useState(false); // State to manage login visibility
-  const [showRegister, setShowRegister] = useState(false); // State to manage register visibility
-  const location = useLocation(); // Hook to access location
-  const [successMessage, setSuccessMessage] = useState(''); // State for success message
-  const [showModal, setShowModal] = useState(false); // State to manage modal visibility
+  const [showLogin, setShowLogin] = useState(false); 
+  const [showRegister, setShowRegister] = useState(false); 
+  const location = useLocation(); 
+  const [successMessage, setSuccessMessage] = useState(''); 
+  const [showModal, setShowModal] = useState(false); 
 
-  // Use useEffect to check for message in location state
   useEffect(() => {
-    const message = location.state?.message; // Get the message from location state
+    const message = location.state?.message; 
     if (message) {
-      setSuccessMessage(message); // Set the success message
-      setShowModal(true); // Show the modal when there is a success message
+      setSuccessMessage(message); 
+      setShowModal(true); 
     }
-  }, [location.state]); // Dependency on location.state
+  }, [location.state]); 
 
   const closeModal = () => {
-    setShowModal(false); // Close the modal
-    setSuccessMessage(''); // Clear the success message
+    setShowModal(false); 
+    setSuccessMessage(''); 
   };
 
   return (
     <div className="welcome-container">
       <nav className="navbar">
-        <div className="navbar-left">
-          <a className="navbar-brand" href="#">
-            Tiffin Data Entry
-          </a>
-          <div className="navbar-buttons">
-            <button className="btn btn-outline-light" onClick={() => setShowLogin(true)}>
-              Login
-            </button>
-            <button className="btn btn-outline-light" onClick={() => setShowRegister(true)}>
-              Register
-            </button>
-          </div>
+        <a className="navbar-brand" href="#">
+          Tiffin Data Entry
+        </a>
+
+        {/* Right side container for buttons */}
+        <div className="navbar-right">
+          <button className="btn btn-outline-light" onClick={() => setShowLogin(true)}>
+            Login
+          </button>
+          <button className="btn btn-outline-light" onClick={() => setShowRegister(true)}>
+            Register
+          </button>
         </div>
       </nav>
+
+      <div className="image-placeholder">
+        <img src="/images/tiffin2.jpg" alt="Background" />
+      </div>
 
       {/* Conditionally render the Login and Register components */}
       {showLogin && <Login setShowLogin={setShowLogin} />}
