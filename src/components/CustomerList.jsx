@@ -1,9 +1,9 @@
 import React from 'react';
+import './CustomerList.css';
 
 const CustomerList = ({ filteredCustomers, handleTiffinClick }) => {
   return (
-    <div>
-      <h2>Customer List</h2>
+    <div className="customer-list-container"> {/* New container for scrolling */}
       <table className="customer-table">
         <thead>
           <tr>

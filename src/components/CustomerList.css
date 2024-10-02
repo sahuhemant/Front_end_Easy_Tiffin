@@ -1,0 +1,61 @@
+/* Customer List Container */
+.customer-list-container {
+  max-height: 400px; /* Set a maximum height for the customer list */
+  overflow-y: auto; /* Enable vertical scrolling */
+  border: 1px solid #ccc; /* Light border around the container */
+  border-radius: 5px; /* Rounded corners */
+  margin-top: 20px; /* Spacing above the list */
+}
+
+/* Customer List Styles */
+.customer-table {
+  width: 100%; /* Full width of the container */
+  border-collapse: collapse; /* Remove space between cells */
+}
+
+.customer-table th,
+.customer-table td {
+  padding: 12px; /* Space inside each cell */
+  border: 1px solid #ccc; /* Light gray border for cells */
+  text-align: left; /* Align text to the left */
+}
+
+.customer-table th {
+  background-color: #007bff; /* Primary color for the header */
+  color: white; /* White text for header */
+  font-weight: bold; /* Bold text for better visibility */
+}
+
+.customer-table tr:nth-child(even) {
+  background-color: #f9f9f9; /* Light background for even rows */
+}
+
+.customer-table tr:hover {
+  background-color: #e1e1e1; /* Highlight row on hover */
+}
+
+.tiffin-button {
+  background-color: #28a745; /* Green background for button */
+  color: white; /* White text */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  padding: 8px 12px; /* Padding for button */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.tiffin-button:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .customer-table th,
+  .customer-table td {
+    padding: 8px; /* Smaller padding on smaller screens */
+  }
+
+  .customer-table th {
+    font-size: 0.9em; /* Slightly smaller font size */
+  }
+}
