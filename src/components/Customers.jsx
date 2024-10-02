@@ -8,12 +8,12 @@ import CustomerList from './CustomerList'; // Import the CustomerList component
 import Modal from './Modal'; // Import the Modal component
 
 const Customers = () => {
-  const { logout } = useAuth(); 
+  const { logout } = useAuth();
   const [customers, setCustomers] = useState([]);
   const [filteredCustomers, setFilteredCustomers] = useState([]);
   const [newCustomer, setNewCustomer] = useState({ name: '', mobile_no: '', address: '' });
-  const [showModal, setShowModal] = useState(false); // Use showModal instead of showDialog
-  const [modalMessage, setModalMessage] = useState(''); // Message for the modal
+  const [showModal, setShowModal] = useState(false); 
+  const [modalMessage, setModalMessage] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
@@ -61,8 +61,8 @@ const Customers = () => {
       if (response.ok) {
         fetchCustomers();
         setNewCustomer({ name: '', mobile_no: '', address: '' });
-        setModalMessage('Customer created successfully!'); // Set modal message
-        setShowModal(true); // Show the modal
+        setModalMessage('Customer created successfully!');
+        setShowModal(true);
         setShowForm(false);
       } else {
         console.error('Failed to add customer:', await response.json());
@@ -81,21 +81,28 @@ const Customers = () => {
   };
 
   const handleLogout = () => {
-    logout(); // Assuming logout is defined in your useAuth hook
+    logout();
     navigate('/'); // Redirect to Welcome page
   };
 
   return (
-    <div className="customer-container">
-      <button className="logout-button" onClick={handleLogout}>
-        Logout
-      </button>
-      
-      <div className="button-container">
+    <div className="customers-container">
+      <nav className="navbar">
         <button className="navigate-to-form-button" onClick={() => navigate('/payment')}>
-          Please Donate Some Amount for me
+          Contribute to My Efforts
         </button>
-      </div>
+        <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>        
+      </nav>
+
+      <CustomerForm 
+        newCustomer={newCustomer} 
+        setNewCustomer={setNewCustomer} 
+        handleAddCustomer={handleAddCustomer} 
+        showForm={showForm} 
+        setShowForm={setShowForm} 
+      />
 
       <div className="search-container">
         <input
@@ -107,20 +114,12 @@ const Customers = () => {
         />
       </div>
 
-      <CustomerForm 
-        newCustomer={newCustomer} 
-        setNewCustomer={setNewCustomer} 
-        handleAddCustomer={handleAddCustomer} 
-        showForm={showForm} 
-        setShowForm={setShowForm} 
-      />
-
       <CustomerList 
         filteredCustomers={filteredCustomers} 
         handleTiffinClick={handleTiffinClick} 
       />
 
-      {showModal && <Modal message={modalMessage} onClose={closeModal} />} {/* Show the modal */}
+      {showModal && <Modal message={modalMessage} onClose={closeModal} />}
     </div>
   );
 };

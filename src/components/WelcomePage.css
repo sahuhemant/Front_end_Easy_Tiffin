@@ -6,6 +6,7 @@
   color: white;
   font-family: 'Arial', sans-serif;
   position: relative;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
 /* Navbar styles */
@@ -25,17 +26,19 @@
 
 /* To ensure space between the navbar and content */
 .image-placeholder {
-  margin-top: 350px; /* Adjust according to the height of your navbar */
+  margin-top: 50px; /* Adjust according to the height of your navbar */
   background-color: transparent;
-  height: 400px; /* Placeholder height, adjust based on your image */
+  height: calc(100vh - 50px); /* Full viewport height minus the navbar height */
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden; /* Hide overflow if necessary */
 }
 
 .image-placeholder img {
-  width: 140%;
-  height: auto;
+  width: 100%; /* Ensure the image fills the width of the container */
+  height: 100%; /* Fill the height of the container */
+  object-fit: cover; /* Ensure the image covers the entire area without stretching */
 }
 
 /* Adjusted brand styles */
