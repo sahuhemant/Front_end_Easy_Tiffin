@@ -1,18 +1,15 @@
-/* WelcomePage.css */
+/* Style for the entire page */
 .welcome-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
   color: white;
-  font-family: "Arial", sans-serif;
+  font-family: 'Arial', sans-serif;
   position: relative;
-
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  /* overflow-x: hidden; Prevent horizontal scrolling */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
+/* Navbar styles */
 .navbar {
   background-color: #333;
   padding: 1rem 2rem;
@@ -21,9 +18,9 @@
   align-items: center;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   position: fixed; /* Keep the navbar fixed at the top */
-  width: 100%;
+  width: 100%; 
   top: 0;
-  left: 0;
+  left: 0; 
   z-index: 1000;
 }
 
@@ -31,8 +28,7 @@
 .image-placeholder {
   margin-top: 50px; /* Adjust according to the height of your navbar */
   background-color: transparent;
-
-  height: 75px; /* Placeholder height, adjust based on your image */
+  height: calc(100vh - 50px); /* Full viewport height minus the navbar height */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -45,24 +41,10 @@
   object-fit: cover; /* Ensure the image covers the entire area without stretching */
 }
 
-.typing-overlay {
-  position: absolute;
-  top: 50%;
-  left: 25%;
-  transform: translate(-50%, -50%);
-  color: white;
-  font-size: 2rem;
-  font-weight: bold;
-}
-
-@media (max-width: 768px) {
-  .typing-overlay {
-    font-size: 1.5rem;
-  }
-}
-
+/* Adjusted brand styles */
 .navbar-brand {
-  font-size: 2rem;
+  font-size: 1.8rem;
+  color: #e74c3c !important;
   font-weight: bold;
 }
 
@@ -75,9 +57,8 @@
 
 .navbar-buttons {
   display: flex;
-
-  flex-direction: column;
-  margin-top: 0.5rem;
+  flex-direction: column; 
+  margin-top: 0.5rem; 
 }
 
 /* Button styling */
@@ -93,103 +74,21 @@
 
 .btn-outline-light:hover {
   background-color: white;
-
   color: #333;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s, color 0.3s;
+  border-color: white;
 }
-
-.btn:hover {
-  background: rgba(255, 255, 255, 1);
-  color: #000;
-}
-
-.overlay {
+.typing-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 5;
-}
-
-.hero-section {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  text-align: center;
-  z-index: 1;
+  top: 50%;
+  left: 25%;
+  transform: translate(-50%, -50%);
   color: white;
-}
-
-.hero-section h1 {
-  font-size: 4rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  margin: 20px 0;
-  letter-spacing: 2px;
-  text-shadow: 2px 4px 10px rgba(0, 0, 0, 0.7); /* Adding shadow for elegance */
-}
-
-.hero-section p {
-  font-size: 1.5rem;
-  margin-bottom: 40px;
-  text-shadow: 1px 2px 5px rgba(0, 0, 0, 0.7);
-}
-
-.action-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
+  font-size: 2rem;
+  font-weight: bold;
 }
 
 @media (max-width: 768px) {
-  .hero-section h1 {
-    font-size: 2.5rem;
-  }
-
-  .hero-section p {
-    font-size: 1.2rem;
-  }
-
-  .navbar-brand {
+  .typing-overlay {
     font-size: 1.5rem;
   }
-
-  .btn {
-    font-size: 0.9rem;
-    padding: 10px 15px;
-  }
-}
-
-.navbar-brand {
-  font-size: 2.5rem; /* Large but not too overwhelming */
-  font-weight: bold;
-  color: white; /* Maintain white for contrast against a dark background */
-  text-transform: uppercase; /* Uppercase to emphasize the brand */
-  letter-spacing: 2px; /* Slight letter spacing for elegance */
-  transition: color 0.3s ease-in-out, transform 0.3s ease-in-out; /* Smooth transitions */
-  text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
-}
-
-.navbar-brand:hover {
-  color: #ff7e5f; /* Professional warm accent color */
-  transform: translateY(
-    -5px
-  ); /* A small lift on hover to create a dynamic feel */
-}
-
-.navbar {
-  background: rgba(
-    0,
-    0,
-    0,
-    0.8
-  ); /* Semi-transparent black for a modern professional look */
-  padding: 15px 20px; /* Clean padding for a compact, professional feel */
 }
