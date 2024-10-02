@@ -1,16 +1,14 @@
-/* Login.css */
-
 .login-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh; /* Cover the whole viewport */
-  background: rgba(0, 0, 0, 0.6); /* Semi-transparent background to overlay the page */
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Ensure the login overlay is on top */
+  z-index: 1000; /* Ensure overlay is on top */
 }
 
 .login-container {
@@ -19,13 +17,13 @@
   align-items: center;
   justify-content: center;
   width: 400px; /* Adjust width for a more web look */
-  background: #ffffff; /* White background for the login card */
+  background: #ffffff; /* White background */
   color: #333; /* Dark text color */
   text-align: center;
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  z-index: 1100; /* Make sure the login form appears above the overlay */
+  z-index: 1100; /* Ensure form appears above overlay */
 }
 
 .login-title {
@@ -33,13 +31,13 @@
   margin-bottom: 1.5rem;
 }
 
-.login-success {
-  color: #28a745; /* Green color */
+.login-error {
+  color: #dc3545; /* Red color */
   margin-bottom: 1rem;
 }
 
-.login-error {
-  color: #dc3545; /* Red color */
+.login-success {
+  color: #28a745; /* Green success message */
   margin-bottom: 1rem;
 }
 

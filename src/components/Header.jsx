@@ -6,9 +6,9 @@ const Header = () => {
 
   return (
     <header>
-      {username && (
+      {/* {username && (
         <button onClick={logout}>Logout</button>
-      )}
+      )} */}
     </header>
   );
 };
