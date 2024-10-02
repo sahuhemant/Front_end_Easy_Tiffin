@@ -4,6 +4,7 @@
   margin: 0; /* Remove auto margins */
   padding: 0; /* Remove padding */
   text-align: center;
+   overflow-y: hidden;
    overflow-x: hidden;
 }
 
