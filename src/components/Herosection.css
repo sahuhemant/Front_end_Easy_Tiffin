@@ -1,0 +1,87 @@
+/* HeroSection.css */
+.hero-section {
+  height: 100vh; /* Full height */
+  width: 100vw; /* Full width */
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  z-index: 0; /* Ensure hero section is below navbar */
+  background-image: url("https://as2.ftcdn.net/v2/jpg/09/63/70/03/1000_F_963700300_QKVQVd3Z8rLmbRTl5Bv1QmyusQDzjI95.jpg"); /* Background image */
+  background-size: cover; /* Cover the entire section */
+  background-position: center; /* Center the image */
+}
+
+.hero-section .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Dark overlay for better text visibility */
+}
+
+.hero-content {
+  z-index: 1; /* Ensure content is above overlay */
+  display: flex; /* Use flexbox for centering */
+  flex-direction: column; /* Arrange items in a column */
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+  height: 100%; /* Full height for the flexbox to work */
+  padding: 20px; /* Optional padding */
+}
+
+.hero-content h1 {
+  font-size: 3.5rem; /* Large title */
+  margin-bottom: 1rem;
+}
+
+.hero-content p {
+  font-size: 1.5rem; /* Subtitle */
+  margin-bottom: 2rem;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem; /* Space between action buttons */
+}
+
+/* HeroSection.css */
+.navbar-brand {
+  color: white; /* Explicitly set the text color to white */
+  text-decoration: none; /* Optional: Remove underline from the link */
+}
+
+/* styling typing heading    */
+typing-heading {
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: 0.15em solid orange; /* The typwriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+  letter-spacing: 0.15em; /* Adjust as needed */
+  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+/* The typing effect */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: orange;
+  }
+}
