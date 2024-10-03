@@ -1,21 +1,25 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import './Customers.css';
-import '../App.css';
-import { useAuth } from '../AuthContext';
-import CustomerForm from './CustomerForm'; // Import the CustomerForm component
-import CustomerList from './CustomerList'; // Import the CustomerList component
-import Modal from './Modal'; // Import the Modal component
+import "./Customers.css";
+import "../App.css";
+import { useAuth } from "../AuthContext";
+import CustomerForm from "./CustomerForm"; // Import the CustomerForm component
+import CustomerList from "./CustomerList"; // Import the CustomerList component
+import Modal from "./Modal"; // Import the Modal component
 
 const Customers = () => {
   const { logout } = useAuth();
   const [customers, setCustomers] = useState([]);
   const [filteredCustomers, setFilteredCustomers] = useState([]);
-  const [newCustomer, setNewCustomer] = useState({ name: '', mobile_no: '', address: '' });
-  const [showModal, setShowModal] = useState(false); 
-  const [modalMessage, setModalMessage] = useState('');
+  const [newCustomer, setNewCustomer] = useState({
+    name: "",
+    mobile_no: "",
+    address: "",
+  });
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
   const [showForm, setShowForm] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,7 +27,7 @@ const Customers = () => {
   }, []);
 
   useEffect(() => {
-    const filtered = customers.filter(customer =>
+    const filtered = customers.filter((customer) =>
       customer.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredCustomers(filtered);
@@ -33,42 +37,42 @@ const Customers = () => {
     try {
       const response = await fetch(`http://localhost:3001/customers`, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
       if (response.ok) {
         const data = await response.json();
         setCustomers(Array.isArray(data) ? data : []);
       } else {
-        console.error('Failed to fetch customers:', await response.json());
+        console.error("Failed to fetch customers:", await response.json());
       }
     } catch (error) {
-      console.error('Error fetching customers:', error);
+      console.error("Error fetching customers:", error);
     }
   };
 
   const handleAddCustomer = async () => {
     try {
       const response = await fetch(`http://localhost:3001/customers`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({ customer: newCustomer }),
       });
 
       if (response.ok) {
         fetchCustomers();
-        setNewCustomer({ name: '', mobile_no: '', address: '' });
-        setModalMessage('Customer created successfully!');
+        setNewCustomer({ name: "", mobile_no: "", address: "" });
+        setModalMessage("Customer created successfully!");
         setShowModal(true);
         setShowForm(false);
       } else {
-        console.error('Failed to add customer:', await response.json());
+        console.error("Failed to add customer:", await response.json());
       }
     } catch (error) {
-      console.error('Error adding customer:', error);
+      console.error("Error adding customer:", error);
     }
   };
 
@@ -82,13 +86,16 @@ const Customers = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/'); // Redirect to Welcome page
+    navigate("/"); // Redirect to Welcome page
   };
 
   return (
     <div className="customers-container">
       <nav className="navbar">
-        <button className="navigate-to-form-button" onClick={() => navigate('/payment')}>
+        <button
+          className="navigate-to-form-button"
+          onClick={() => navigate("/payment")}
+        >
           Contribute to My Efforts
         </button>
         <button className="payment-done-button" onClick={() => navigate('/payment-done')}>
@@ -99,30 +106,36 @@ const Customers = () => {
         </button>      
         <button className="logout-button" onClick={handleLogout}>
           Logout
-        </button>        
+        </button>
       </nav>
 
-      <CustomerForm 
-        newCustomer={newCustomer} 
-        setNewCustomer={setNewCustomer} 
-        handleAddCustomer={handleAddCustomer} 
-        showForm={showForm} 
-        setShowForm={setShowForm} 
-      />
+      <div className="top-section">
+        {/* search bar */}
+        <div className="search-container">
+          <input
+            type="text"
+            placeholder="Search Customer by Name....."
+            value={searchTerm}
+            className="search-input"
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
 
-      <div className="search-container">
-        <input
-          type="text"
-          placeholder="Search by Name"
-          value={searchTerm}
-          className="search-input"
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+        {/* form to add customer  */}
+        <div className="form-container">
+          <CustomerForm
+            newCustomer={newCustomer}
+            setNewCustomer={setNewCustomer}
+            handleAddCustomer={handleAddCustomer}
+            showForm={showForm}
+            setShowForm={setShowForm}
+          />
+        </div>
       </div>
-
-      <CustomerList 
-        filteredCustomers={filteredCustomers} 
-        handleTiffinClick={handleTiffinClick} 
+      {/* List of customers  */}
+      <CustomerList
+        filteredCustomers={filteredCustomers}
+        handleTiffinClick={handleTiffinClick}
       />
 
       {showModal && <Modal message={modalMessage} onClose={closeModal} />}

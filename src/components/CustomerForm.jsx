@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './CustomerForm.css'
 const CustomerForm = ({ newCustomer, setNewCustomer, handleAddCustomer, showForm, setShowForm }) => {
   return (
     <>
@@ -27,11 +27,11 @@ const CustomerForm = ({ newCustomer, setNewCustomer, handleAddCustomer, showForm
             className="form-input"
             onChange={(e) => setNewCustomer({ ...newCustomer, address: e.target.value })}
           />
-          <button className="add-button" onClick={handleAddCustomer}>Add Customer</button>
+          <button className="add-button" onClick={handleAddCustomer}>Submit</button>
         </div>
       )}
       <button className="toggle-form-button" onClick={() => setShowForm(!showForm)}>
-        {showForm ? 'Hide Form' : 'Add Customer'}
+        {showForm ? 'Hide Form' : 'Add New Customer'}
       </button>
     </>
   );
