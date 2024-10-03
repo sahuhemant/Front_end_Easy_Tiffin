@@ -1,0 +1,90 @@
+/* General Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f9; /* Light background */
+  margin: 0;
+  padding: 0;
+}
+
+/* Payment Done Container */
+.payment-done-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 20px auto; /* Centers the container */
+  background-color: white; /* White background for contrast */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Navbar Styles */
+.navbar {
+  display: flex;
+  justify-content: space-between; /* Space between buttons */
+  align-items: center;
+  background-color: #f8f9fa; /* Light navbar background */
+  padding: 15px 20px; /* Padding around the navbar */
+  border-bottom: 2px solid #ddd; /* Adds a separator below the navbar */
+  margin-bottom: 20px; /* Space below the navbar */
+}
+
+/* Button Styles */
+.navigate-to-form-button,
+.payment-done-button,
+.payment-pending-button,
+.logout-button {
+  background-color: #007bff; /* Primary color */
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  flex: 1; /* Allow buttons to grow */
+  max-width: 180px;
+}
+
+.logout-button {
+  margin-right: 0; /* Align buttons properly */
+}
+
+.navigate-to-form-button:hover,
+.payment-done-button:hover,
+.payment-pending-button:hover,
+.logout-button:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+/* Payment Details Table */
+.payment-table {
+  width: 100%; /* Full width */
+  border-collapse: collapse;
+  margin-top: 20px; /* Space above table */
+}
+
+.payment-table th,
+.payment-table td {
+  border: 1px solid #ccc;
+  padding: 12px;
+  text-align: left;
+}
+
+.payment-table th {
+  background-color: #007bff; /* Primary color for header */
+  color: white;
+}
+
+.payment-table tr:hover {
+  background-color: #f1f1f1; /* Row highlight on hover */
+}
+
+.payment-content h1 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #343a40;
+}
+
+/* Ensuring table starts right below the navbar */
+.payment-content {
+  margin-top: 0;
+}

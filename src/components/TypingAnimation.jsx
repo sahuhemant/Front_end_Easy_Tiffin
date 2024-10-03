@@ -15,7 +15,7 @@ const TypingAnimation = () => {
       }}
     >
       <Typewriter
-        words={["स्वाद और सेहत से भरपूर घर जैसा खाना, आपके दरवाज़े तक!"]}
+        words={["आसानी से रखें अपने टिफिन का हिसाब!"]}
         loop={5}
         cursor
         cursorStyle="_"

@@ -6,6 +6,8 @@ import Register from './components/Register';
 import Customers from './components/Customers';
 import Tiffins from './components/Tiffins';
 import Payment from './components/Payment';
+import PaymentDone from './components/PaymentDone';
+import PaymentPending from './components/PaymentPending'; 
 import Header from './components/Header';
 import VerifyOtp from './components/Verifyotp';
 import WelcomePage from './components/WelcomePage'; // Import the new component
@@ -28,6 +30,8 @@ function App() {
         <Route path="/customers" element={<Customers />} />
         <Route path="/customers/:customerId/tiffins" element={<Tiffins />} />
         <Route path="/payment" element={<Payment />} />
+        <Route path="/payment-done" element={<PaymentDone />} /> {/* Add the PaymentDone route */}
+        <Route path="/payment-pending" element={<PaymentPending />} />
       </Routes>
     </div>
   );
