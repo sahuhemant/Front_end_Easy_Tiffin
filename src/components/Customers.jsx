@@ -91,6 +91,12 @@ const Customers = () => {
         <button className="navigate-to-form-button" onClick={() => navigate('/payment')}>
           Contribute to My Efforts
         </button>
+        <button className="payment-done-button" onClick={() => navigate('/payment-done')}>
+          Payment Done
+        </button>
+        <button className="payment-pending-button" onClick={() => navigate('/payment-pending')}>
+          Payment Pending
+        </button>      
         <button className="logout-button" onClick={handleLogout}>
           Logout
         </button>        
