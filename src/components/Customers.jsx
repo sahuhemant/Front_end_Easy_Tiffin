@@ -6,6 +6,7 @@ import { useAuth } from "../AuthContext";
 import CustomerForm from "./CustomerForm"; // Import the CustomerForm component
 import CustomerList from "./CustomerList"; // Import the CustomerList component
 import Modal from "./Modal"; // Import the Modal component
+import ChatMessage from "./ChatMessage";
 
 const Customers = () => {
   const { logout } = useAuth();
@@ -139,6 +140,7 @@ const Customers = () => {
       />
 
       {showModal && <Modal message={modalMessage} onClose={closeModal} />}
+      <ChatMessage />
     </div>
   );
 };
