@@ -1,0 +1,42 @@
+/* Chat Icon Styles */
+.chat-icon-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000; /* Ensure it's on top */
+}
+
+.chat-icon {
+  background-color: #6a0dad; /* Purple background */
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 30px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.chat-icon:hover {
+  background-color: #4b0082; /* Darker purple on hover */
+}
+
+.chat-box {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 300px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  display: none; /* Initially hidden */
+}
+
+.chat-box.open {
+  display: block; /* Show when the chat box is open */
+}
