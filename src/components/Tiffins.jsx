@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import './Tiffins.css';
-import PaymentCard from './PaymentCard';
 import TiffinForm from './TiffinForm';
 import TiffinList from './TiffinList';
 
@@ -108,27 +107,20 @@ const Tiffins = () => {
     }
   };
 
-  const handleBackToCustomers = () => {
-    navigate('/customers');
-  };
+  // const handleBackToCustomers = () => {
+  //   navigate('/customers');
+  // };
 
   return (
     <div className="tiffin-container">
-      <button onClick={handleBackToCustomers} className="back-button">
+      {/* <button onClick={handleBackToCustomers} className="back-button">
         Back to Customers
-      </button>
-      
-      <h1 className="customer-header">Tiffins for Customer {customerId}</h1>
-      <PaymentCard customerId={customerId} />
-      
+      </button> */}
+      {message && <p>{message}</p>} {/* Show message if exists */}
       <h2 className="total-tiffin-count">
         Total Tiffins: <span>{tiffinCount}</span>
       </h2>
-
-      {message && <p>{message}</p>} {/* Show message if exists */}
-
       <div className="tiffin-list">
-        <h2>Tiffin List</h2>
         <table>
           <thead>
             <tr>
