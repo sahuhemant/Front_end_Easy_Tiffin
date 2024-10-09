@@ -30,8 +30,7 @@ body {
 
 /* Button Styles */
 .navigate-to-form-button,
-.payment-done-button,
-.payment-pending-button,
+.dropdown-toggle,
 .logout-button {
   background-color: #007bff; /* Primary color */
   color: white;
@@ -43,6 +42,84 @@ body {
   transition: background-color 0.3s;
   max-width: 180px; /* Set a max width to limit button length */
   flex: 1; /* Allow buttons to grow */
+}
+
+/* Dropdown Styles */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 16px;
+}
+
+.dropdown-toggle:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+/* Dropdown Menu Styles */
+.dropdown-menu {
+  display: block;
+  position: absolute;
+  background-color: white;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Adds shadow for depth */
+  border-radius: 8px; /* Rounded corners */
+  z-index: 1;
+  margin-top: 10px; /* Space between the button and the menu */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px); /* Dropdown animation */
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+}
+
+/* Show dropdown */
+.dropdown:hover .dropdown-menu,
+.dropdown-menu:hover {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0); /* Slide down animation */
+}
+
+.dropdown-menu button {
+  background-color: white;
+  color: black;
+  padding: 10px 20px; /* Better padding for spacing */
+  width: 100%;
+  text-align: left;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 14px;
+  border-bottom: 1px solid #f0f0f0; /* Subtle border between options */
+  border-radius: 0;
+}
+
+.dropdown-menu button:first-child {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.dropdown-menu button:last-child {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.dropdown-menu button:hover {
+  background-color: #f1f1f1; /* Subtle gray on hover */
+}
+
+.dropdown-menu button:focus {
+  outline: none;
+  background-color: #e6e6e6; /* Even darker gray when focused */
 }
 
 .logout-button {

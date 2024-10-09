@@ -92,9 +92,12 @@ const PaymentDone = () => {
   return (
     <div className="payment-done-container">
       <nav className="navbar">
-        <button className="navigate-to-form-button" onClick={() => navigate('/payment')}>
+        {/* <button className="navigate-to-form-button" onClick={() => navigate('/payment')}>
           Contribute to My Efforts
-        </button>
+        </button> */}
+        <button className="back-button" onClick={() => navigate('/customers')}>
+          Back
+        </button> 
         <button className="payment-done-button" onClick={() => navigate('/payment-done')}>
           Payment Done
         </button>
@@ -107,7 +110,7 @@ const PaymentDone = () => {
       </nav>
 
       <div className="payment-content">
-        <h1>Payment Details</h1>
+        <h1>Payment Done</h1>
         {paymentData.length > 0 ? (
           <table className="payment-table">
             <thead>
