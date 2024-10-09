@@ -21,6 +21,7 @@ const Customers = () => {
   const [modalMessage, setModalMessage] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -90,21 +91,44 @@ const Customers = () => {
     navigate("/"); // Redirect to Welcome page
   };
 
+    // Dropdown toggle function
+  const handleDropdownToggle = () => {
+    setShowDropdown((prevShowDropdown) => !prevShowDropdown);
+  };
+
+  const handlePaymentDone = () => {
+    navigate("/payment-done");
+  };
+
+  const handlePaymentPending = () => {
+    navigate("/payment-pending");
+  };
+
   return (
     <div className="customers-container">
       <nav className="navbar">
-        <button
+        {/* <button
           className="navigate-to-form-button"
           onClick={() => navigate("/payment")}
         >
           Contribute to My Efforts
-        </button>
-        <button className="payment-done-button" onClick={() => navigate('/payment-done')}>
-          Payment Done
-        </button>
-        <button className="payment-pending-button" onClick={() => navigate('/payment-pending')}>
-          Payment Pending
-        </button>      
+        </button> */}
+        <button className="logout-button" onClick={handleLogout}>
+          Back
+        </button>     
+        {/* Dropdown Button */}
+        <div className="dropdown">
+          <button className="dropdown-toggle" onClick={handleDropdownToggle}>
+            Payment
+          </button>
+
+          {showDropdown && (
+            <div className="dropdown-menu">
+              <button onClick={handlePaymentDone}>Payment Done</button>
+              <button onClick={handlePaymentPending}>Payment Pending</button>
+            </div>
+          )}
+        </div>     
         <button className="logout-button" onClick={handleLogout}>
           Logout
         </button>
