@@ -30,6 +30,7 @@ body {
 
 /* Button Styles */
 .navigate-to-form-button,
+.add-customer-button,
 .dropdown-toggle,
 .logout-button {
   background-color: #007bff; /* Primary color */
@@ -127,6 +128,7 @@ body {
 }
 
 .navigate-to-form-button:hover,
+.add-customer-button,
 .payment-done-button:hover,
 .payment-pending-button:hover,
 .logout-button:hover {
