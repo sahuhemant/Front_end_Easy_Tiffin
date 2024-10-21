@@ -91,7 +91,6 @@ const Customers = () => {
     navigate("/"); // Redirect to Welcome page
   };
 
-    // Dropdown toggle function
   const handleDropdownToggle = () => {
     setShowDropdown((prevShowDropdown) => !prevShowDropdown);
   };
@@ -107,16 +106,10 @@ const Customers = () => {
   return (
     <div className="customers-container">
       <nav className="navbar">
-        {/* <button
-          className="navigate-to-form-button"
-          onClick={() => navigate("/payment")}
-        >
-          Contribute to My Efforts
-        </button> */}
         <button className="logout-button" onClick={handleLogout}>
           Back
         </button>     
-        {/* Dropdown Button */}
+
         <div className="dropdown">
           <button className="dropdown-toggle" onClick={handleDropdownToggle}>
             Payment
@@ -128,7 +121,11 @@ const Customers = () => {
               <button onClick={handlePaymentPending}>Payment Pending</button>
             </div>
           )}
-        </div>     
+        </div>  
+        <button className="add-customer-button" onClick={() => setShowForm(!showForm)}>
+          Add Customer
+        </button>   
+
         <button className="logout-button" onClick={handleLogout}>
           Logout
         </button>
@@ -146,18 +143,21 @@ const Customers = () => {
           />
         </div>
 
-        {/* form to add customer  */}
-        <div className="form-container">
-          <CustomerForm
-            newCustomer={newCustomer}
-            setNewCustomer={setNewCustomer}
-            handleAddCustomer={handleAddCustomer}
-            showForm={showForm}
-            setShowForm={setShowForm}
-          />
-        </div>
+        {/* form to add customer */}
+        {showForm && (
+          <div className="form-container">
+            <CustomerForm
+              newCustomer={newCustomer}
+              setNewCustomer={setNewCustomer}
+              handleAddCustomer={handleAddCustomer}
+              showForm={showForm}
+              setShowForm={setShowForm}
+            />
+          </div>
+        )}
       </div>
-      {/* List of customers  */}
+
+      {/* List of customers */}
       <CustomerList
         filteredCustomers={filteredCustomers}
         handleTiffinClick={handleTiffinClick}
