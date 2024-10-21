@@ -118,8 +118,9 @@ const Tiffins = () => {
       </button> */}
       {message && <p>{message}</p>} {/* Show message if exists */}
       <h2 className="total-tiffin-count">
-        Total Tiffins: <span>{tiffinCount}</span>
+        Total Tiffins: <span>{tiffinCount}</span> Customer name: <span>{tiffinCount}</span>
       </h2>
+    
       <div className="tiffin-list">
         <table>
           <thead>

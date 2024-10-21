@@ -1,30 +1,41 @@
 /* General Styles */
 body {
   font-family: 'Arial', sans-serif;
-  background-color: #f4f4f9; /* Light background */
+  background-color: #f4f4f9;
   margin: 0;
   padding: 0;
+  height: 100vh; /* Ensure body takes full height */
+  overflow-y: auto; /* Allow body to scroll */
+  display: flex;
+  flex-direction: column; /* Column layout for body */
 }
 
 /* Payment Done Container */
 .payment-done-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
   padding: 20px;
   max-width: 1200px;
-  margin: 20px auto; /* Centers the container */
-  background-color: white; /* White background for contrast */
-  border-radius: 10px; /* Rounded corners */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  margin: 20px auto;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Prevent content overflow */
 }
 
 /* Navbar Styles */
 .navbar {
   display: flex;
-  justify-content: space-between; /* Space between buttons */
+  justify-content: space-between;
   align-items: center;
-  background-color: #f8f9fa; /* Light navbar background */
-  padding: 15px 20px; /* Padding around the navbar */
-  border-bottom: 2px solid #ddd; /* Adds a separator below the navbar */
-  margin-bottom: 20px; /* Space below the navbar */
+  background-color: #f8f9fa;
+  padding: 15px 20px;
+  border-bottom: 2px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
 }
 
 /* Button Styles */
@@ -33,7 +44,7 @@ body {
 .payment-pending-button,
 .back-button,
 .logout-button {
-  background-color: #007bff; /* Primary color */
+  background-color: #007bff;
   color: white;
   padding: 10px 15px;
   border: none;
@@ -41,12 +52,8 @@ body {
   margin: 0 5px;
   cursor: pointer;
   transition: background-color 0.3s;
-  flex: 1; /* Allow buttons to grow */
+  flex: 1;
   max-width: 180px;
-}
-
-.logout-button {
-  margin-right: 0; /* Align buttons properly */
 }
 
 .navigate-to-form-button:hover,
@@ -54,14 +61,22 @@ body {
 .payment-pending-button:hover,
 .back-button:hover,
 .logout-button:hover {
-  background-color: #0056b3; /* Darker shade on hover */
+  background-color: #0056b3;
+}
+
+/* Scrollable Content for Payment Data */
+.payment-content {
+  flex-grow: 1;
+  overflow-y: auto; /* Enable scrolling within the payment content */
+  margin-top: 20px;
+  max-height: calc(100vh - 160px); /* Adjust height so it fits within the viewport */
 }
 
 /* Payment Details Table */
 .payment-table {
-  width: 100%; /* Full width */
+  width: 100%;
   border-collapse: collapse;
-  margin-top: 20px; /* Space above table */
+  margin-top: 20px;
 }
 
 .payment-table th,
@@ -72,21 +87,16 @@ body {
 }
 
 .payment-table th {
-  background-color: #007bff; /* Primary color for header */
+  background-color: #007bff;
   color: white;
 }
 
 .payment-table tr:hover {
-  background-color: #f1f1f1; /* Row highlight on hover */
+  background-color: #f1f1f1;
 }
 
 .payment-content h1 {
   margin-bottom: 20px;
   font-size: 24px;
   color: #343a40;
-}
-
-/* Ensuring table starts right below the navbar */
-.payment-content {
-  margin-top: 0;
 }
