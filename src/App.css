@@ -4,8 +4,8 @@
   margin: 0; /* Remove auto margins */
   padding: 0; /* Remove padding */
   text-align: center;
-   overflow-y: hidden;
-   overflow-x: hidden;
+  overflow-x: hidden; /* Keep horizontal overflow hidden */
+  overflow-y: auto; /* Allow vertical scrolling */
 }
 
 .logo {

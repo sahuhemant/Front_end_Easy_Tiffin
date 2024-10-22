@@ -14,9 +14,10 @@ const Tiffins = () => {
   });
   const [editTiffin, setEditTiffin] = useState(null);
   const [tiffinCount, setTiffinCount] = useState(0);
+  const [customerName, setCustomerName] = useState(""); // New state for customer name
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
-  const token = localStorage.getItem('token'); 
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     fetchTiffins();
@@ -27,7 +28,7 @@ const Tiffins = () => {
       const response = await fetch(`http://localhost:3001/customers/${customerId}/tiffins`, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`, 
+          'Authorization': `Bearer ${token}`,
         },
       });
 
@@ -39,6 +40,7 @@ const Tiffins = () => {
         } else {
           setTiffins(tiffinsData);
           setTiffinCount(data.total_count);
+          setCustomerName(data.customer.name); // Set customer name from API
         }
       } else {
         setMessage('Failed to fetch tiffins.');
@@ -107,20 +109,27 @@ const Tiffins = () => {
     }
   };
 
-  // const handleBackToCustomers = () => {
-  //   navigate('/customers');
-  // };
+  const handleBackToCustomers = () => {
+    navigate('/customers');
+  };
 
   return (
     <div className="tiffin-container">
-      {/* <button onClick={handleBackToCustomers} className="back-button">
-        Back to Customers
-      </button> */}
+      <div className="top-section">
+        {/* Back button */}
+        <button onClick={handleBackToCustomers} className="back-button">
+          Back
+        </button>
+
+        {/* Total Tiffins and Customer Name */}
+        <h2 className="total-tiffin-count">&nbsp; &nbsp;
+          Customer Name: <span>{customerName}</span> &nbsp; | &nbsp;
+          Total Tiffins: <span>{tiffinCount}</span>
+        </h2>
+      </div>
+
       {message && <p>{message}</p>} {/* Show message if exists */}
-      <h2 className="total-tiffin-count">
-        Total Tiffins: <span>{tiffinCount}</span> Customer name: <span>{tiffinCount}</span>
-      </h2>
-    
+      
       <div className="tiffin-list">
         <table>
           <thead>
