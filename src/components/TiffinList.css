@@ -6,7 +6,7 @@
 }
 
 .tiffin-list {
-  display: flex;
-  justify-content: flex-end; /* Align tiffin list to the right */
   width: 100%; /* Ensure it takes full width */
+  margin-top: 20px;
+  display: block; /* Use block layout for natural vertical flow */
 }
