@@ -3,7 +3,7 @@ import './CustomerList.css';
 
 const CustomerList = ({ filteredCustomers, handleTiffinClick }) => {
   return (
-    <div className="customer-list-container"> {/* New container for scrolling */}
+    <div className="customer-list-container"> 
       <table className="customer-table">
         <thead>
           <tr>
