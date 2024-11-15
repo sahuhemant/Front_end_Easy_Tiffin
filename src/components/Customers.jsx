@@ -108,7 +108,10 @@ const Customers = () => {
       <nav className="navbar">
         <button className="logout-button" onClick={handleLogout}>
           Back
-        </button>     
+        </button>
+        <button className="logout-button" onClick={handleLogout}>
+          Customers
+        </button>        
 
         <div className="dropdown">
           <button className="dropdown-toggle" onClick={handleDropdownToggle}>
